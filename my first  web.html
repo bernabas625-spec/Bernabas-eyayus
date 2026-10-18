@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bernabas Eya</title>
+
+  <!-- Google Analytics (replace G-XXXXXXXXXX with your ID) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+
+  <!-- CSS Styling -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4f4f4;
+      color: #333;
+    }
+
+    header {
+      background: #4CAF50;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+    }
+    nav a {
+      margin: 0 15px;
+      color: white;
+      text-decoration: none;
+    }
+
+    .hero {
+      background: url('hero-image.jpg') no-repeat center center/cover;
+      color: white;
+      padding: 100px 20px;
+      text-align: center;
+    }
+
+    section {
+      padding: 40px;
+      text-align: center;
+    }
+
+    .project-card {
+      background: white;
+      padding: 20px;
+      margin: 20px auto;
+      width: 300px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+      opacity: 0;
+      animation: slideIn 1s forwards;
+    }
+    .project-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    }
+
+    .fade-in { opacity: 0; animation: fadeIn 2s forwards; }
+    @keyframes fadeIn { to { opacity: 1; } }
+    @keyframes slideIn {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    form {
+      max-width: 400px;
+      margin: 0 auto;
+      text-align: left;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    input[type="submit"] {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    input[type="submit"]:hover { background: #45a049; }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      max-width: 300px;
+      animation: fadeIn 0.5s forwards;
+    }
+    .close-btn {
+      margin-top: 15px;
+      padding: 8px 15px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .close-btn:hover { background: #45a049; }
+
+    @media (max-width: 600px) {
+      .project-card { width: 90%; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <h1>Bernabas' Portfolio</h1>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <div class="hero fade-in">
+    <h2>Hello, I’m Bernabas</h2>
+    <p>A creative web developer passionate about modern design.</p>
+  </div>
+
+  <!-- About -->
+  <section id="about">
+    <h2>About Me</h2>
+    <p>I love building websites that are clean, interactive, and user‑friendly.</p>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects">
+    <h2>My Projects</h2>
+    <div class="project-card" style="animation-delay: 0.5s;">
+      <h3>Portfolio Website</h3>
+      <p>A modern personal portfolio with animations.</p>
+    </div>
+    <div class="project-card" style="animation-delay: 1s;">
+      <h3>Quiz App</h3>
+      <p>An interactive quiz built with JavaScript.</p>
+    </div>
+    <div class="project-card" style="animation-delay: 1.5s;">
+      <h3>Blog Platform</h3>
+      <p>A simple blog site with responsive design.</p>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <h2>Contact Me</h2>
+    <form id="contactForm">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="user_name" required>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="user_email" required>
+
+      <label for="message">Message:</label>
+      <textarea id="message" name="message" rows="5" required></textarea>
+
+      <input type="submit" value="Send Message">
+    </form>
+  </section>
+
+  <!-- Popup Modal -->
+  <div id="successModal" class="modal">
+    <div class="modal-content">
+      <h3>✅ Message Sent!</h3>
+      <p>Thank you, your message has been delivered successfully.</p>
+      <button class="close-btn" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script>
+    // Initialize EmailJS (replace with your keys)
+    (function(){
+      emailjs.init("YOUR_PUBLIC_KEY");
+    })();
+
+    // Contact form submission with popup modal
+    document.getElementById("contactForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      emailjs.sendForm("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", this)
+        .then(function() {
+          document.getElementById("successModal").style.display = "flex";
+          document.getElementById("contactForm").reset();
+        }, function(error) {
+          alert("⚠️ Failed to send message. Try again.");
+        });
+    });
+
+    // Close modal
+    function closeModal() {
+      document.getElementById("successModal").style.display = "none";
+    }
+  </script>
+</body>
+</html>
